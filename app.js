@@ -7,8 +7,15 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 var app = express();
+
+//enable cors
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -27,9 +34,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-MongoClient.connect('mongodb://127.0.0.1:27017/liveslide', function(err, db) {
+mongoose.connect('mongodb://localhost/liveslide');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
   app.get('/', routes.index(db));
 });
+
 
 http.createServer(app).listen(app.get('port'), function(){
 

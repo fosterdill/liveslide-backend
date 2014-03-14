@@ -1,14 +1,18 @@
 {
   "name": "liveslide",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "mongodb": "1.3.x",
     "express": "3.4.8",
     "jade": "*",
-    "socket.io": "0.9.x"
+    "socket.io": "0.9.x",
+    "mongoose": "~3.8.8"
+  },
+  "subdomain": "liveslide",
+  "engines": {
+    "node": "0.10.x"
   }
 }
